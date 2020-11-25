@@ -1,4 +1,4 @@
-package bs.servlet;
+package com.revature.servlet;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bs.controller.RequestHelper;
+import com.revature.controller.RequestHelper;
 
 
 public class MasterServlet extends HttpServlet {

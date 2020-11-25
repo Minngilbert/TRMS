@@ -1,4 +1,4 @@
-package bs.controller;
+package com.revature.controller;
 
 import java.io.IOException;
 
