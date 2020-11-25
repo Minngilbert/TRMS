@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Employee Home Page</title>
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Yellowtail" />
+<link rel="stylesheet" type="text/css" href="../homeEMP.css"/>
+
+<script type="text/javascript">
+
+function loadDHView(viewDH){
+	console.log("in loadEmpView");
+	console.log(viewDH);
+	console.log(viewDH.length);
+	
+    var table = $('#pendingReq').DataTable( {
+        data: viewDH,
+        columns: [
+ 	        { data: 'formID' },
+	        { data: 'formFirstName' },
+	        { data: 'formLastName' },
+	        { data: 'formEventCost' },
+	        { data: 'formEventStartDate' },
+	        { data: 'formEventAddress' },
+	        { data: 'formEventCity' },
+	        { data: 'formEventState' },
+	        { data: 'formEventZip' },
+	        { data: 'formGradedFormat' },
+	        { data: 'formDescription' }       
+        ]
+    } );
+
+}
+
+
+
+function alertApproval(){
+	var xhr= new XMLHttpRequest();
+	 console.log("in findEmpView");
+	 xhr.onreadystatechange = function(){
+		 if(xhr.readyState==4 && xhr.status==200){
+			var approval = xhr.responseText;
+			console.log(approval);
+			if(approval == 'Approved'){
+				alert('Your reimbursement has been approved!!!!!!!!!!!!!!!!');
+				}
+		 }
+	 }
+	 xhr.open("GET","http://localhost:8080/Project1/api/notifyEMPapp",true);
+	 xhr.send();
+}
+
+window.onload=function(){
+	console.log("in onload");
+	notifications();
+	alertApproval();
+}
+
+function notifications(){
+	var xhr= new XMLHttpRequest();
+	 console.log("in findEmpView");
+	 xhr.onreadystatechange = function(){
+		 if(xhr.readyState==4 && xhr.status==200){
+			var notif = xhr.responseText;
+			console.log(notif);
+			if(notif == 'true'){
+				alert('More information is require, please upload in information tab');
+				}
+		 }
+	 }
+	 xhr.open("GET","http://localhost:8080/Project1/api/notifyEMP",true);
+	 xhr.send();
+}
+	
+</script>
+</head>
+
+<body>
+<nav class="header">
+		<h1 class="logo"><a href="#">Bobson & Sons</a></h1>
+      <ul class="main-nav">
+          <li><a href="#">Home</a></li>
+          <li><a href="/Project1/api/EMPTrms">TR-Form</a></li>
+        <li><a href="#">Upload Additional Info</a></li>
+        <li><a href="/Project1/api/logout">Logout</a></li>
+      </ul>
+</nav>
+
+ 	<h1>Welcome to the TRMS home page!!</h1>
+
+	
+   <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script> 
+
+</body>
+</html>

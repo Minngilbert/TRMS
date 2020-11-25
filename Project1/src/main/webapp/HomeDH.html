@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Department Head HomePage</title>
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Yellowtail" />
+<link rel="stylesheet" type="text/css" href="../homeEMP.css"/>
+
+<script type="text/javascript">
+
+function loadDHView(viewDH){
+	console.log("in loadEmpView");
+	console.log(viewDH);
+	console.log(viewDH.length);
+	
+    var table = $('#pendingReq').DataTable( {
+        data: viewDH,
+        columns: [
+ 	        { data: 'formID' },
+	        { data: 'formApplicationID' },
+	        { data: 'formFirstName' },
+	        { data: 'formLastName' },
+	        { data: 'formEventCost' },
+	        { data: 'formEventStartDate' },
+	        { data: 'formEventAddress' },
+	        { data: 'formEventCity' },
+	        { data: 'formEventState' },
+	        { data: 'formEventZip' },
+	        { data: 'formGradedFormat' },
+	        { data: 'formDescription' }       
+        ]
+    } );
+
+}
+
+function findEmpView(){
+ var xhr= new XMLHttpRequest();
+ console.log("in findEmpView");
+ xhr.onreadystatechange = function(){
+	 if(xhr.readyState==4 && xhr.status==200){
+		console.log(xhr.responseText);
+		var viewDH = JSON.parse(xhr.responseText);	
+	 	console.log(viewDH);
+	 	loadDHView(viewDH);
+	 }    
+}
+xhr.open("GET","http://localhost:8080/Project1/api/dhView",true);
+xhr.send();
+}
+
+
+window.onload=function(){
+	console.log("in onload");
+	findEmpView();
+}
+	
+</script>
+</head>
+
+<body>
+<nav class="header">
+		<h1 class="logo"><a href="#">Bobson & Sons</a></h1>
+      <ul class="main-nav">
+        <li><a href="/Project1/api/logout">Logout</a></li>
+      </ul>
+</nav>
+ 	<h1>Pending Applications</h1>
+ 	
+	<form action ="/Project1/api/approvalDH">	
+		<input name="eid1" placeholder="Enter Form Id" type="text"></input>
+
+		<button >Click here to approve</button>
+	</form>
+	
+	<form action="/Project1/api/denyDH">
+		<input name="eid2" placeholder="Enter Form Id" type="text"></input>
+		<input name= "reason" placeholder="Reason for denying" required="required"></input>
+		<button >Click here to deny</button>
+	</form>
+	
+	<br>
+	<table id="pendingReq" class="display" style="width:100%">
+	<thead>
+		<tr>
+			<th>Form ID </th>
+			<th>Application Id</th>
+			<th>First Name</th>
+			<th>Last Name</th>
+			<th>Event Cost</th>
+			<th>Events Start Date </th>
+			<th>Event Address</th>
+			<th>Event City</th>
+			<th>Event State</th>
+			<th>Event zip</th>	
+			<th>graded format</th>
+			<th>description</th>
+
+		</tr>
+	</thead>
+	
+	</table>
+	<h1>Request Additional Info</h1>
+		<p>Enter Application ID from who you would like to request more information from: </p>
+		<form action="/Project1/api/RAIFE">
+		<input name= "appID" placeholder="Enter Application Id">
+		<button>Request Info</button>
+		</form>
+	
+
+   <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script> 
+
+</body>
+</html>
